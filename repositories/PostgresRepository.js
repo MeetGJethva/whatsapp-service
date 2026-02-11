@@ -9,13 +9,27 @@ class PostgresRepository extends BaseRepository {
     this.pool = new Pool(config.db);
   }
 
-  async saveMessage({ whatsapp_id, from_number, body, is_from_me }) {
+  async saveMessage({ whatsapp_id, from_number, body, is_from_me, conversation_id }) {
+    // We use a CTE (WITH clause) to ensure we get an ID even if the conflict occurs
     const query = `
-            INSERT INTO whatsapp_messages (whatsapp_id, from_number, body, is_from_me)
-            VALUES ($1, $2, $3, $4) ON CONFLICT (whatsapp_id) DO NOTHING;
-        `;
-    return this.pool.query(query, [whatsapp_id, from_number, body, is_from_me]);
-  }
+        WITH inserted AS (
+            INSERT INTO whatsapp_messages (whatsapp_id, from_number, body, is_from_me, conversation_id)
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (whatsapp_id) DO NOTHING
+            RETURNING id
+        )
+        SELECT id FROM inserted
+        UNION ALL
+        SELECT id FROM whatsapp_messages WHERE whatsapp_id = $1
+        LIMIT 1;
+    `;
+    
+    const values = [whatsapp_id, from_number, body, is_from_me, conversation_id];
+    const result = await this.pool.query(query, values);
+    
+    // Return the ID of the record
+    return result.rows[0]?.id;
+}
 
   async getChatHistory(from_number) {
     const query = `

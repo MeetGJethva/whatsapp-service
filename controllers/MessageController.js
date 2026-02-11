@@ -6,16 +6,20 @@ class MessageController {
   }
 
   sendMessage = async (req, res) => {
-    const { number, message } = req.body;
+    // console.log(`Send message is called ${req}`);
+
+    const { number, message, is_reply } = req.body;
     try {
       const result = await this.messenger.sendMessage(number, message);
 
-      await this.db.saveMessage({
-        whatsapp_id: result.response.id.id,
-        from_number: result.response.id.remote,
-        body: message,
-        is_from_me: true,
-      });
+      if (!is_reply) {
+        await this.db.saveMessage({
+          whatsapp_id: result.response.id.id,
+          from_number: result.response.id.remote,
+          body: message,
+          is_from_me: true,
+        });
+      }
 
       res.json({ status: "sent" });
     } catch (error) {
@@ -38,12 +42,10 @@ class MessageController {
 
     try {
       const newWebhook = await this.db.insertWebhook({ url, retries, secret });
-      res
-        .status(201)
-        .json({
-          message: "Webhook registered successfully",
-          webhook: newWebhook,
-        });
+      res.status(201).json({
+        message: "Webhook registered successfully",
+        webhook: newWebhook,
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to register webhook" });
     }
@@ -55,12 +57,10 @@ class MessageController {
       const deletedWebhook = await this.db.deleteWebhook(id);
       if (!deletedWebhook)
         return res.status(404).json({ error: "Webhook not found" });
-      res
-        .status(200)
-        .json({
-          message: "Webhook deleted successfully",
-          deleted: deletedWebhook,
-        });
+      res.status(200).json({
+        message: "Webhook deleted successfully",
+        deleted: deletedWebhook,
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to delete webhook" });
     }
