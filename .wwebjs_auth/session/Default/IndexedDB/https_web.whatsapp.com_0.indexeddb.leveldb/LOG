@@ -1,0 +1,18 @@
+2026/02/11-11:22:54.246 3d0 Reusing MANIFEST M:\Hexylon\Project\Whatsapp-service\whatsapp-unofficial\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/02/11-11:22:54.254 3d0 Recovering log #2390
+2026/02/11-11:22:54.406 3d0 Reusing old log M:\Hexylon\Project\Whatsapp-service\whatsapp-unofficial\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/002390.log 
+2026/02/11-11:22:54.407 3d0 Delete type=2 #2388
+2026/02/11-11:22:54.407 3d0 Delete type=2 #2389
+2026/02/11-11:22:54.407 3d0 Delete type=2 #2391
+2026/02/11-11:22:54.407 3d0 Delete type=2 #2392
+2026/02/11-11:22:54.407 3d0 Delete type=2 #2393
+2026/02/11-11:22:54.408 3d0 Delete type=2 #2394
+2026/02/11-11:22:54.408 3d0 Delete type=2 #2395
+2026/02/11-11:22:54.410 3d0 Delete type=2 #2396
+2026/02/11-11:22:54.410 3d0 Delete type=2 #2397
+2026/02/11-11:23:30.127 2d74 Compacting 1@1 + 1@2 files
+2026/02/11-11:23:30.376 2d74 Generated table #2410@1: 36651 keys, 1260934 bytes
+2026/02/11-11:23:30.376 2d74 Compacted 1@1 + 1@2 files => 1260934 bytes
+2026/02/11-11:23:30.379 2d74 compacted to: files[ 0 0 18 0 0 0 0 ]
+2026/02/11-11:23:30.380 2d74 Delete type=2 #2369
+2026/02/11-11:23:30.381 2d74 Delete type=2 #2387
